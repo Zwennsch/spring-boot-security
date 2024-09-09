@@ -26,45 +26,55 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeHttpRequests(registry -> {
-            registry.requestMatchers("/home").permitAll();
-            registry.requestMatchers("/admin/**").hasRole("ADMIN");
-            registry.requestMatchers("/user/**").hasRole("USER");
-            registry.anyRequest().authenticated();
-        }).formLogin(formLogin -> formLogin.permitAll())    //by providing a SecurityFilterChain, the normal Login-Form gets removed. That's why I have to manually add it here, By default there will also be a /logout page
+        return httpSecurity
+                .csrf(configurer -> configurer.disable())
+                .authorizeHttpRequests(registry -> {
+                    registry.requestMatchers("/home", "/register/**").permitAll();
+                    registry.requestMatchers("/admin/**").hasRole("ADMIN");
+                    registry.requestMatchers("/user/**").hasRole("USER");
+                    registry.anyRequest().authenticated();
+                }).formLogin(formLogin -> formLogin.permitAll()) // by providing a SecurityFilterChain, the normal
+                                                                 // Login-Form
+                                                                 // gets removed. That's why I have to manually add it
+                                                                 // here, By
+                                                                 // default there will also be a /logout page
                 .build();
     }
 
-    // This was just for in memory usage and testing. No longer needed in real databases like MySql
+    // This was just for in memory usage and testing. No longer needed in real
+    // databases like MySql
 
     // @Bean
     // public UserDetailsService userDetailsService() {
-    //     UserDetails normalUser = User.builder()
-    //             .username("Sven")
-    //             .password("$2a$12$r7tlxcti0WpN/uqTkSQo1.Fx0W4PVCZYXJW9voJK6LKEd5JAXPbcW") // this was generated using an
-    //                                                                                       // online bcrypt generator
-    //                                                                                       // with password 1234
-    //             .roles("USER")
-    //             .build();
-    //     UserDetails adminUser = User.builder()
-    //             .username("admin")
-    //             .password("$2a$12$6IiTc6n0OmCOP8gfJmIw6eQOJ01aHpMhfmcYwwVfIicikSp7JEJ9G") // this was generated using an
-    //                                                                                       // online bcrypt generator
-    //                                                                                       // with password admin
-    //             .roles("ADMIN", "USER")
-    //             .build();
+    // UserDetails normalUser = User.builder()
+    // .username("Sven")
+    // .password("$2a$12$r7tlxcti0WpN/uqTkSQo1.Fx0W4PVCZYXJW9voJK6LKEd5JAXPbcW") //
+    // this was generated using an
+    // // online bcrypt generator
+    // // with password 1234
+    // .roles("USER")
+    // .build();
+    // UserDetails adminUser = User.builder()
+    // .username("admin")
+    // .password("$2a$12$6IiTc6n0OmCOP8gfJmIw6eQOJ01aHpMhfmcYwwVfIicikSp7JEJ9G") //
+    // this was generated using an
+    // // online bcrypt generator
+    // // with password admin
+    // .roles("ADMIN", "USER")
+    // .build();
 
-    //     return new InMemoryUserDetailsManager(normalUser, adminUser);
+    // return new InMemoryUserDetailsManager(normalUser, adminUser);
     // }
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        return userDetailService; 
+    public UserDetailsService userDetailsService() {
+        return userDetailService;
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
-        // This is for loading users from the database or any other access to the database and use it for authentication 
+    public AuthenticationProvider authenticationProvider() {
+        // This is for loading users from the database or any other access to the
+        // database and use it for authentication
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailService);
         provider.setPasswordEncoder(passwordEncoder());

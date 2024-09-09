@@ -1,0 +1,23 @@
+# Users
+
+# Crate a new user:
+
+POST http://localhost:8080/register/user HTTP/1.1
+content-type: application/json
+
+{
+    "username" : "Tom",
+    "password" : "12345",
+    "role" : "USER"    
+}
+
+
+### Add admin user
+POST http://localhost:8080/register/user HTTP/1.1
+content-type: application/json
+
+{
+    "username" : "admin",
+    "password" : "9876",
+    "role" : "USER,ADMIN"    
+}

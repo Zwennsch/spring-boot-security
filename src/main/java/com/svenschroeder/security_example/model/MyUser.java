@@ -13,14 +13,14 @@ public class MyUser {
     private Long id;
     private String username;
     private String password;
-    private String Role; // eg. USER,ADMIN
+    private String role; // eg. USER,ADMIN
 
     public String getRole() {
-        return Role;
+        return role;
     }
 
     public void setRole(String role) {
-        Role = role;
+        this.role = role;
     }
 
     public Long getId() {
