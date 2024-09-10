@@ -34,11 +34,13 @@ public class SecurityConfiguration {
                     registry.requestMatchers("/admin/**").hasRole("ADMIN");
                     registry.requestMatchers("/user/**").hasRole("USER");
                     registry.anyRequest().authenticated();
-                }).formLogin(formLogin -> formLogin.permitAll()) // by providing a SecurityFilterChain, the normal
-                                                                 // Login-Form
-                                                                 // gets removed. That's why I have to manually add it
-                                                                 // here, By
-                                                                 // default there will also be a /logout page
+                }).formLogin(httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.loginPage("/login").permitAll();
+                }) // by providing a SecurityFilterChain, the normal
+                   // Login-Form
+                   // gets removed. That's why I have to manually add it
+                   // here, By
+                   // default there will also be a /logout page
                 .build();
     }
 

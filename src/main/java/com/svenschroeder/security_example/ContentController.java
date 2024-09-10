@@ -2,6 +2,8 @@ package com.svenschroeder.security_example;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -20,5 +22,11 @@ public class ContentController {
     public String handleAdminHome() {
         return "home_admin";
     }
+
+    @GetMapping("/login")
+    public String handleLogin() {
+        return "custom_login";
+    }
+    
     
 }
