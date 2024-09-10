@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.svenschroeder.security_example.model.MyUserDetailService;
 
@@ -35,7 +36,11 @@ public class SecurityConfiguration {
                     registry.requestMatchers("/user/**").hasRole("USER");
                     registry.anyRequest().authenticated();
                 }).formLogin(httpSecurityFormLoginConfigurer -> {
-                    httpSecurityFormLoginConfigurer.loginPage("/login").permitAll();
+                    httpSecurityFormLoginConfigurer.loginPage("/login")
+                    .successHandler(new MyAuthenticationSuccessHandler() {
+                        
+                    })
+                    .permitAll();
                 }) // by providing a SecurityFilterChain, the normal
                    // Login-Form
                    // gets removed. That's why I have to manually add it
