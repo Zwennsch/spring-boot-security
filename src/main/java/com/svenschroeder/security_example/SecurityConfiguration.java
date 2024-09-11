@@ -8,14 +8,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-// import org.springframework.security.core.userdetails.User;
-// import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-// import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.svenschroeder.security_example.model.MyUserDetailService;
 
@@ -49,30 +45,6 @@ public class SecurityConfiguration {
                 .build();
     }
 
-    // This was just for in memory usage and testing. No longer needed in real
-    // databases like MySql
-
-    // @Bean
-    // public UserDetailsService userDetailsService() {
-    // UserDetails normalUser = User.builder()
-    // .username("Sven")
-    // .password("$2a$12$r7tlxcti0WpN/uqTkSQo1.Fx0W4PVCZYXJW9voJK6LKEd5JAXPbcW") //
-    // this was generated using an
-    // // online bcrypt generator
-    // // with password 1234
-    // .roles("USER")
-    // .build();
-    // UserDetails adminUser = User.builder()
-    // .username("admin")
-    // .password("$2a$12$6IiTc6n0OmCOP8gfJmIw6eQOJ01aHpMhfmcYwwVfIicikSp7JEJ9G") //
-    // this was generated using an
-    // // online bcrypt generator
-    // // with password admin
-    // .roles("ADMIN", "USER")
-    // .build();
-
-    // return new InMemoryUserDetailsManager(normalUser, adminUser);
-    // }
 
     @Bean
     public UserDetailsService userDetailsService() {
